@@ -27,6 +27,7 @@ export const AutomationCard = ({ automation }: AutomationCardProps) => {
   const [isTestRunning, setIsTestRunning] = useState(false);
   const [webhookResponse, setWebhookResponse] = useState<any>(null);
   const [responseTimestamp, setResponseTimestamp] = useState<string>("");
+  const [isResponseDialogOpen, setIsResponseDialogOpen] = useState(false);
   const { toast } = useToast();
 
   const handleTest = async () => {
@@ -78,6 +79,7 @@ export const AutomationCard = ({ automation }: AutomationCardProps) => {
         const data = await response.json();
         setWebhookResponse(data);
         setResponseTimestamp(new Date().toLocaleString('fr-FR'));
+        setIsResponseDialogOpen(true);
         
         toast({
           title: "Webhook exécuté avec succès !",
@@ -97,6 +99,7 @@ export const AutomationCard = ({ automation }: AutomationCardProps) => {
       
       setWebhookResponse(errorResponse);
       setResponseTimestamp(new Date().toLocaleString('fr-FR'));
+      setIsResponseDialogOpen(true);
       
       toast({
         title: "Erreur lors de l'appel du webhook",
@@ -208,14 +211,21 @@ export const AutomationCard = ({ automation }: AutomationCardProps) => {
         </CardFooter>
       </Card>
       
-      {/* Affichage de la réponse du webhook */}
-      {webhookResponse && (
-        <WebhookResponse 
-          response={webhookResponse}
-          automationTitle={automation.title}
-          timestamp={responseTimestamp}
-        />
-      )}
+      {/* Dialog pour afficher la réponse du webhook */}
+      <Dialog open={isResponseDialogOpen} onOpenChange={setIsResponseDialogOpen}>
+        <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Résultat de l'automatisation - {automation.title}</DialogTitle>
+          </DialogHeader>
+          {webhookResponse && (
+            <WebhookResponse 
+              response={webhookResponse}
+              automationTitle={automation.title}
+              timestamp={responseTimestamp}
+            />
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

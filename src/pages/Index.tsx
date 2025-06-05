@@ -1,4 +1,3 @@
-
 import { AutomationCard } from "@/components/AutomationCard";
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
@@ -22,7 +21,7 @@ const automations = [
     description: "Assistant vocal intelligent qui répond à vos questions et exécute des tâches automatisées via commandes vocales.",
     category: "Communication",
     videoUrl: "https://example.com/demo-video-2.mp4",
-    webhookUrl: "https://n8n.srv837294.hstgr.cloud/webhook-test/assistant_vocal",
+    webhookUrl: "https://n8n.srv837294.hstgr.cloud/webhook/assistant_vocal",
     isActive: true,
     executionCount: 892,
     lastExecution: "Il y a 15 minutes"
