@@ -11,16 +11,18 @@ const automations = [
     description: "Automatise la synchronisation entre votre CRM et vos campagnes email. Met à jour automatiquement les contacts et déclenche des séquences personnalisées.",
     category: "CRM & Marketing",
     videoUrl: "https://example.com/demo-video-1.mp4",
+    webhookUrl: "https://n8n.srv837294.hstgr.cloud/webhook/crm",
     isActive: true,
     executionCount: 1247,
     lastExecution: "Il y a 2 minutes"
   },
   {
     id: 2,
-    title: "Notification Slack des Ventes",
-    description: "Envoie instantanément des notifications Slack à votre équipe lors de nouvelles ventes ou leads qualifiés avec tous les détails importants.",
+    title: "Assistant Personnel Vocal",
+    description: "Assistant vocal intelligent qui répond à vos questions et exécute des tâches automatisées via commandes vocales.",
     category: "Communication",
     videoUrl: "https://example.com/demo-video-2.mp4",
+    webhookUrl: "https://n8n.srv837294.hstgr.cloud/webhook-test/assistant_vocal",
     isActive: true,
     executionCount: 892,
     lastExecution: "Il y a 15 minutes"
