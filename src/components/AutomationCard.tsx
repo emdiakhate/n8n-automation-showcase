@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
@@ -6,6 +7,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Play, MoreVertical, Activity, Clock, TestTube } from "lucide-react";
 import { useState } from "react";
 import { WebhookResponse } from "./WebhookResponse";
+import { ScrappingForm } from "./ScrappingForm";
 
 interface Automation {
   id: number;
@@ -14,9 +16,11 @@ interface Automation {
   category: string;
   videoUrl: string;
   webhookUrl?: string;
+  formUrl?: string;
   isActive: boolean;
   executionCount: number;
   lastExecution: string;
+  formType?: 'scrapping' | 'video';
 }
 
 interface AutomationCardProps {
@@ -28,10 +32,23 @@ export const AutomationCard = ({ automation }: AutomationCardProps) => {
   const [webhookResponse, setWebhookResponse] = useState<any>(null);
   const [responseTimestamp, setResponseTimestamp] = useState<string>("");
   const [isResponseDialogOpen, setIsResponseDialogOpen] = useState(false);
+  const [isFormDialogOpen, setIsFormDialogOpen] = useState(false);
   const { toast } = useToast();
 
-  const handleTest = async () => {
-    if (!automation.webhookUrl) {
+  const handleTest = async (formData?: any) => {
+    if (automation.formType === 'scrapping' && !formData) {
+      setIsFormDialogOpen(true);
+      return;
+    }
+
+    if (automation.formType === 'video') {
+      if (automation.formUrl) {
+        window.open(automation.formUrl, '_blank');
+        return;
+      }
+    }
+
+    if (!automation.webhookUrl && !automation.formType) {
       // Comportement par défaut pour les automatisations sans webhook
       setIsTestRunning(true);
       console.log(`Testing automation: ${automation.title}`);
@@ -62,17 +79,20 @@ export const AutomationCard = ({ automation }: AutomationCardProps) => {
     });
 
     try {
-      const response = await fetch(automation.webhookUrl, {
+      const requestBody = {
+        timestamp: new Date().toISOString(),
+        triggered_from: window.location.origin,
+        automation_id: automation.id,
+        automation_title: automation.title,
+        ...formData
+      };
+
+      const response = await fetch(automation.webhookUrl!, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          timestamp: new Date().toISOString(),
-          triggered_from: window.location.origin,
-          automation_id: automation.id,
-          automation_title: automation.title
-        }),
+        body: JSON.stringify(requestBody),
       });
 
       if (response.ok) {
@@ -80,6 +100,7 @@ export const AutomationCard = ({ automation }: AutomationCardProps) => {
         setWebhookResponse(data);
         setResponseTimestamp(new Date().toLocaleString('fr-FR'));
         setIsResponseDialogOpen(true);
+        setIsFormDialogOpen(false);
         
         toast({
           title: "Webhook exécuté avec succès !",
@@ -100,6 +121,7 @@ export const AutomationCard = ({ automation }: AutomationCardProps) => {
       setWebhookResponse(errorResponse);
       setResponseTimestamp(new Date().toLocaleString('fr-FR'));
       setIsResponseDialogOpen(true);
+      setIsFormDialogOpen(false);
       
       toast({
         title: "Erreur lors de l'appel du webhook",
@@ -117,9 +139,18 @@ export const AutomationCard = ({ automation }: AutomationCardProps) => {
       "Communication": "bg-green-100 text-green-800 border-green-200",
       "Infrastructure": "bg-purple-100 text-purple-800 border-purple-200",
       "Reporting": "bg-orange-100 text-orange-800 border-orange-200",
-      "Finance": "bg-yellow-100 text-yellow-800 border-yellow-200"
+      "Finance": "bg-yellow-100 text-yellow-800 border-yellow-200",
+      "Scrapping": "bg-red-100 text-red-800 border-red-200",
+      "Marketing": "bg-pink-100 text-pink-800 border-pink-200"
     };
     return colors[category as keyof typeof colors] || "bg-gray-100 text-gray-800 border-gray-200";
+  };
+
+  const getButtonText = () => {
+    if (automation.formType === 'video') {
+      return "Ouvrir le formulaire";
+    }
+    return "Tester l'automatisation";
   };
 
   return (
@@ -192,7 +223,7 @@ export const AutomationCard = ({ automation }: AutomationCardProps) => {
 
         <CardFooter>
           <Button 
-            onClick={handleTest}
+            onClick={() => handleTest()}
             disabled={isTestRunning || !automation.isActive}
             className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 disabled:opacity-50"
           >
@@ -204,12 +235,27 @@ export const AutomationCard = ({ automation }: AutomationCardProps) => {
             ) : (
               <>
                 <TestTube className="w-4 h-4 mr-2" />
-                Tester l'automatisation
+                {getButtonText()}
               </>
             )}
           </Button>
         </CardFooter>
       </Card>
+      
+      {/* Dialog pour le formulaire de scrapping */}
+      {automation.formType === 'scrapping' && (
+        <Dialog open={isFormDialogOpen} onOpenChange={setIsFormDialogOpen}>
+          <DialogContent className="max-w-md">
+            <DialogHeader>
+              <DialogTitle>Configuration Scrapping</DialogTitle>
+            </DialogHeader>
+            <ScrappingForm 
+              onSubmit={handleTest}
+              isLoading={isTestRunning}
+            />
+          </DialogContent>
+        </Dialog>
+      )}
       
       {/* Dialog pour afficher la réponse du webhook */}
       <Dialog open={isResponseDialogOpen} onOpenChange={setIsResponseDialogOpen}>

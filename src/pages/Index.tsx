@@ -1,3 +1,4 @@
+
 import { AutomationCard } from "@/components/AutomationCard";
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
@@ -28,40 +29,64 @@ const automations = [
   },
   {
     id: 3,
+    title: "Scrapping",
+    description: "Extraction automatique de données depuis diverses sources web avec filtrage par localisation et contrôle du volume.",
+    category: "Scrapping",
+    videoUrl: "https://example.com/demo-video-3.mp4",
+    webhookUrl: "https://n8n.srv837294.hstgr.cloud/webhook/scrapping",
+    isActive: true,
+    executionCount: 456,
+    lastExecution: "Il y a 10 minutes",
+    formType: "scrapping"
+  },
+  {
+    id: 4,
+    title: "Générer Vidéo Produit",
+    description: "Génération de supports marketing professionnels.",
+    category: "Marketing",
+    videoUrl: "https://example.com/demo-video-4.mp4",
+    formUrl: "https://n8n.srv837294.hstgr.cloud/form/edbfac47-9880-4c19-b8b7-249d2f03727c",
+    isActive: true,
+    executionCount: 234,
+    lastExecution: "Il y a 5 minutes",
+    formType: "video"
+  },
+  {
+    id: 5,
     title: "Sauvegarde Base de Données",
     description: "Effectue des sauvegardes automatiques de vos bases de données critiques et les stocke de manière sécurisée dans le cloud.",
     category: "Infrastructure",
-    videoUrl: "https://example.com/demo-video-3.mp4",
+    videoUrl: "https://example.com/demo-video-5.mp4",
     isActive: true,
     executionCount: 156,
     lastExecution: "Il y a 1 heure"
   },
   {
-    id: 4,
+    id: 6,
     title: "Génération de Rapports",
     description: "Génère et distribue automatiquement des rapports hebdomadaires de performance à votre équipe de direction.",
     category: "Reporting",
-    videoUrl: "https://example.com/demo-video-4.mp4",
+    videoUrl: "https://example.com/demo-video-6.mp4",
     isActive: false,
     executionCount: 78,
     lastExecution: "Il y a 3 jours"
   },
   {
-    id: 5,
+    id: 7,
     title: "Traitement Factures",
     description: "Traite automatiquement les factures entrantes, extrait les données importantes et les intègre dans votre système comptable.",
     category: "Finance",
-    videoUrl: "https://example.com/demo-video-5.mp4",
+    videoUrl: "https://example.com/demo-video-7.mp4",
     isActive: true,
     executionCount: 342,
     lastExecution: "Il y a 30 minutes"
   },
   {
-    id: 6,
+    id: 8,
     title: "Monitoring Serveurs",
     description: "Surveille la santé de vos serveurs 24/7 et envoie des alertes automatiques en cas de problème détecté.",
     category: "Infrastructure",
-    videoUrl: "https://example.com/demo-video-6.mp4",
+    videoUrl: "https://example.com/demo-video-8.mp4",
     isActive: true,
     executionCount: 2156,
     lastExecution: "Il y a 1 minute"
