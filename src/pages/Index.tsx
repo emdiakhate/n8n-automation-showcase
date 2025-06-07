@@ -1,4 +1,3 @@
-
 import { AutomationCard } from "@/components/AutomationCard";
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
@@ -37,7 +36,7 @@ const automations = [
     isActive: true,
     executionCount: 456,
     lastExecution: "Il y a 10 minutes",
-    formType: "scrapping"
+    formType: "scrapping" as const
   },
   {
     id: 4,
@@ -49,7 +48,7 @@ const automations = [
     isActive: true,
     executionCount: 234,
     lastExecution: "Il y a 5 minutes",
-    formType: "video"
+    formType: "video" as const
   },
   {
     id: 5,
