@@ -69,9 +69,10 @@ const automations = [
     category: "Reporting",
     videoUrl: "https://example.com/demo-video-6.mp4",
     webhookUrl: "https://n8n.srv837294.hstgr.cloud/webhook/genererdocument",
-    isActive: false,
+    isActive: true,
     executionCount: 78,
-    lastExecution: "Il y a 3 jours"
+    lastExecution: "Il y a 3 jours",
+    formType: "file" as const
   },
   {
     id: 7,
@@ -85,10 +86,11 @@ const automations = [
   },
   {
     id: 8,
-    title: "Monitoring Serveurs",
-    description: "Surveille la santé de vos serveurs 24/7 et envoie des alertes automatiques en cas de problème détecté.",
-    category: "Infrastructure",
+    title: "RAG",
+    description: "Système RAG (Retrieval-Augmented Generation) pour l'analyse et la génération de contenu intelligent basé sur vos documents.",
+    category: "Intelligence Artificielle",
     videoUrl: "https://example.com/demo-video-8.mp4",
+    webhookUrl: "https://n8n.srv837294.hstgr.cloud/webhook/rag",
     isActive: true,
     executionCount: 2156,
     lastExecution: "Il y a 1 minute"

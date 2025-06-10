@@ -142,7 +142,8 @@ export const AutomationCard = ({ automation }: AutomationCardProps) => {
       "Reporting": "bg-orange-100 text-orange-800 border-orange-200",
       "Finance": "bg-yellow-100 text-yellow-800 border-yellow-200",
       "Scrapping": "bg-red-100 text-red-800 border-red-200",
-      "Marketing": "bg-pink-100 text-pink-800 border-pink-200"
+      "Marketing": "bg-pink-100 text-pink-800 border-pink-200",
+      "Intelligence Artificielle": "bg-indigo-100 text-indigo-800 border-indigo-200"
     };
     return colors[category as keyof typeof colors] || "bg-gray-100 text-gray-800 border-gray-200";
   };
@@ -180,6 +181,25 @@ export const AutomationCard = ({ automation }: AutomationCardProps) => {
         timestamp={responseTimestamp}
       />
     );
+  };
+
+  const getFileUploadProps = () => {
+    if (automation.title === "Synchronisation CRM") {
+      return {
+        acceptedFileTypes: ".pdf",
+        title: "Fichier PDF à analyser"
+      };
+    }
+    if (automation.title === "Générer Documents") {
+      return {
+        acceptedFileTypes: ".txt,.doc,.docx,.pdf",
+        title: "Document à traiter"
+      };
+    }
+    return {
+      acceptedFileTypes: ".txt,.csv,.json",
+      title: "Fichier à traiter"
+    };
   };
 
   return (
@@ -291,11 +311,16 @@ export const AutomationCard = ({ automation }: AutomationCardProps) => {
         <Dialog open={isFormDialogOpen} onOpenChange={setIsFormDialogOpen}>
           <DialogContent className="max-w-md">
             <DialogHeader>
-              <DialogTitle>Traitement de fichier</DialogTitle>
+              <DialogTitle>
+                {automation.title === "Synchronisation CRM" ? "Analyse de PDF" : 
+                 automation.title === "Générer Documents" ? "Upload de document" : 
+                 "Traitement de fichier"}
+              </DialogTitle>
             </DialogHeader>
             <FileUploadForm 
               onSubmit={handleTest}
               isLoading={isTestRunning}
+              {...getFileUploadProps()}
             />
           </DialogContent>
         </Dialog>

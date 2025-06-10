@@ -9,9 +9,16 @@ import { Upload } from "lucide-react";
 interface FileUploadFormProps {
   onSubmit: (data: { fileContent: string; fileName: string }) => void;
   isLoading: boolean;
+  acceptedFileTypes?: string;
+  title?: string;
 }
 
-export const FileUploadForm = ({ onSubmit, isLoading }: FileUploadFormProps) => {
+export const FileUploadForm = ({ 
+  onSubmit, 
+  isLoading, 
+  acceptedFileTypes = ".txt,.csv,.json,.pdf",
+  title = "Fichier à traiter"
+}: FileUploadFormProps) => {
   const [file, setFile] = useState<File | null>(null);
   const { toast } = useToast();
 
@@ -35,7 +42,25 @@ export const FileUploadForm = ({ onSubmit, isLoading }: FileUploadFormProps) => 
     }
 
     try {
-      const fileContent = await file.text();
+      let fileContent: string;
+      
+      if (file.type === 'application/pdf') {
+        // Pour les PDF, on envoie le fichier en base64
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const base64 = e.target?.result as string;
+          onSubmit({ 
+            fileContent: base64,
+            fileName: file.name 
+          });
+        };
+        reader.readAsDataURL(file);
+        return;
+      } else {
+        // Pour les autres fichiers, on lit le contenu texte
+        fileContent = await file.text();
+      }
+      
       onSubmit({ 
         fileContent, 
         fileName: file.name 
@@ -52,13 +77,13 @@ export const FileUploadForm = ({ onSubmit, isLoading }: FileUploadFormProps) => 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="space-y-2">
-        <Label htmlFor="file">Fichier à traiter *</Label>
+        <Label htmlFor="file">{title} *</Label>
         <Input
           id="file"
           type="file"
           onChange={handleFileChange}
           disabled={isLoading}
-          accept=".txt,.csv,.json"
+          accept={acceptedFileTypes}
         />
         {file && (
           <p className="text-sm text-gray-600">
