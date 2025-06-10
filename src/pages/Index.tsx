@@ -1,3 +1,4 @@
+
 import { AutomationCard } from "@/components/AutomationCard";
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
@@ -6,14 +7,15 @@ import { StatsSection } from "@/components/StatsSection";
 const automations = [
   {
     id: 1,
-    title: "Synchronisation CRM-Email",
-    description: "Automatise la synchronisation entre votre CRM et vos campagnes email. Met à jour automatiquement les contacts et déclenche des séquences personnalisées.",
+    title: "Synchronisation CRM",
+    description: "Automatise la synchronisation de votre CRM en traitant et analysant vos fichiers de données pour optimiser vos processus métier.",
     category: "CRM & Marketing",
     videoUrl: "https://example.com/demo-video-1.mp4",
     webhookUrl: "https://n8n.srv837294.hstgr.cloud/webhook/crm",
     isActive: true,
     executionCount: 1247,
-    lastExecution: "Il y a 2 minutes"
+    lastExecution: "Il y a 2 minutes",
+    formType: "file" as const
   },
   {
     id: 2,
@@ -62,10 +64,11 @@ const automations = [
   },
   {
     id: 6,
-    title: "Génération de Rapports",
-    description: "Génère et distribue automatiquement des rapports hebdomadaires de performance à votre équipe de direction.",
+    title: "Générer Documents",
+    description: "Génère et distribue automatiquement des documents personnalisés pour votre équipe de direction.",
     category: "Reporting",
     videoUrl: "https://example.com/demo-video-6.mp4",
+    webhookUrl: "https://n8n.srv837294.hstgr.cloud/webhook/genererdocument",
     isActive: false,
     executionCount: 78,
     lastExecution: "Il y a 3 jours"

@@ -7,7 +7,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Search } from "lucide-react";
 
 interface ScrappingFormProps {
-  onSubmit: (data: { recherche: string; localisation: string; nombreMax: number }) => void;
+  onSubmit: (data: { Recherche: string; Localisation: string; "Nombre maximum de résultats": number }) => void;
   isLoading: boolean;
 }
 
@@ -29,7 +29,11 @@ export const ScrappingForm = ({ onSubmit, isLoading }: ScrappingFormProps) => {
       return;
     }
 
-    onSubmit({ recherche, localisation, nombreMax });
+    onSubmit({ 
+      "Recherche": recherche, 
+      "Localisation": localisation, 
+      "Nombre maximum de résultats": nombreMax 
+    });
   };
 
   return (

@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
@@ -8,6 +7,8 @@ import { Play, MoreVertical, Activity, Clock, TestTube } from "lucide-react";
 import { useState } from "react";
 import { WebhookResponse } from "./WebhookResponse";
 import { ScrappingForm } from "./ScrappingForm";
+import { FileUploadForm } from "./FileUploadForm";
+import { DataTable } from "./DataTable";
 
 interface Automation {
   id: number;
@@ -20,7 +21,7 @@ interface Automation {
   isActive: boolean;
   executionCount: number;
   lastExecution: string;
-  formType?: 'scrapping' | 'video';
+  formType?: 'scrapping' | 'video' | 'file';
 }
 
 interface AutomationCardProps {
@@ -36,7 +37,7 @@ export const AutomationCard = ({ automation }: AutomationCardProps) => {
   const { toast } = useToast();
 
   const handleTest = async (formData?: any) => {
-    if (automation.formType === 'scrapping' && !formData) {
+    if ((automation.formType === 'scrapping' || automation.formType === 'file') && !formData) {
       setIsFormDialogOpen(true);
       return;
     }
@@ -153,6 +154,34 @@ export const AutomationCard = ({ automation }: AutomationCardProps) => {
     return "Tester l'automatisation";
   };
 
+  const renderResponseContent = () => {
+    if (!webhookResponse) return null;
+
+    // Si les données contiennent un tableau, l'afficher sous forme de tableau
+    if (webhookResponse.data && Array.isArray(webhookResponse.data)) {
+      return (
+        <div className="space-y-4">
+          <DataTable data={webhookResponse.data} title="Résultats" />
+          {webhookResponse.message && (
+            <div className="bg-white p-3 rounded-lg border">
+              <h4 className="font-medium text-gray-700 mb-1">Message:</h4>
+              <p className="text-gray-600">{webhookResponse.message}</p>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    // Sinon, utiliser l'affichage standard
+    return (
+      <WebhookResponse 
+        response={webhookResponse}
+        automationTitle={automation.title}
+        timestamp={responseTimestamp}
+      />
+    );
+  };
+
   return (
     <div>
       <Card className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border-0 shadow-lg bg-white/80 backdrop-blur-sm">
@@ -256,20 +285,29 @@ export const AutomationCard = ({ automation }: AutomationCardProps) => {
           </DialogContent>
         </Dialog>
       )}
+
+      {/* Dialog pour le formulaire de fichier */}
+      {automation.formType === 'file' && (
+        <Dialog open={isFormDialogOpen} onOpenChange={setIsFormDialogOpen}>
+          <DialogContent className="max-w-md">
+            <DialogHeader>
+              <DialogTitle>Traitement de fichier</DialogTitle>
+            </DialogHeader>
+            <FileUploadForm 
+              onSubmit={handleTest}
+              isLoading={isTestRunning}
+            />
+          </DialogContent>
+        </Dialog>
+      )}
       
       {/* Dialog pour afficher la réponse du webhook */}
       <Dialog open={isResponseDialogOpen} onOpenChange={setIsResponseDialogOpen}>
-        <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+        <DialogContent className="max-w-6xl max-h-[80vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Résultat de l'automatisation - {automation.title}</DialogTitle>
           </DialogHeader>
-          {webhookResponse && (
-            <WebhookResponse 
-              response={webhookResponse}
-              automationTitle={automation.title}
-              timestamp={responseTimestamp}
-            />
-          )}
+          {renderResponseContent()}
         </DialogContent>
       </Dialog>
     </div>
