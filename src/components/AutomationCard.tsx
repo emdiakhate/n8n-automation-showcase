@@ -37,7 +37,12 @@ export const AutomationCard = ({ automation }: AutomationCardProps) => {
   const { toast } = useToast();
 
   const handleTest = async (formData?: any) => {
-    if ((automation.formType === 'scrapping' || automation.formType === 'file') && !formData) {
+    if (automation.formType === 'scrapping' && !formData) {
+      setIsFormDialogOpen(true);
+      return;
+    }
+
+    if (automation.formType === 'file' && !formData) {
       setIsFormDialogOpen(true);
       return;
     }
@@ -80,21 +85,37 @@ export const AutomationCard = ({ automation }: AutomationCardProps) => {
     });
 
     try {
-      const requestBody = {
-        timestamp: new Date().toISOString(),
-        triggered_from: window.location.origin,
-        automation_id: automation.id,
-        automation_title: automation.title,
-        ...formData
-      };
+      // Vérifier si c'est RAG ou Générer Documents pour utiliser GET
+      const isGetRequest = automation.title === "RAG" || automation.title === "Générer Documents";
+      
+      let response;
+      
+      if (isGetRequest) {
+        // Requête GET simple
+        response = await fetch(automation.webhookUrl!, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+      } else {
+        // Requête POST avec données
+        const requestBody = {
+          timestamp: new Date().toISOString(),
+          triggered_from: window.location.origin,
+          automation_id: automation.id,
+          automation_title: automation.title,
+          ...formData
+        };
 
-      const response = await fetch(automation.webhookUrl!, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(requestBody),
-      });
+        response = await fetch(automation.webhookUrl!, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(requestBody),
+        });
+      }
 
       if (response.ok) {
         const data = await response.json();
@@ -188,12 +209,6 @@ export const AutomationCard = ({ automation }: AutomationCardProps) => {
       return {
         acceptedFileTypes: ".pdf",
         title: "Fichier PDF à analyser"
-      };
-    }
-    if (automation.title === "Générer Documents") {
-      return {
-        acceptedFileTypes: ".txt,.doc,.docx,.pdf",
-        title: "Document à traiter"
       };
     }
     return {
@@ -306,16 +321,12 @@ export const AutomationCard = ({ automation }: AutomationCardProps) => {
         </Dialog>
       )}
 
-      {/* Dialog pour le formulaire de fichier */}
-      {automation.formType === 'file' && (
+      {/* Dialog pour le formulaire de fichier - seulement pour Synchronisation CRM */}
+      {automation.formType === 'file' && automation.title === "Synchronisation CRM" && (
         <Dialog open={isFormDialogOpen} onOpenChange={setIsFormDialogOpen}>
           <DialogContent className="max-w-md">
             <DialogHeader>
-              <DialogTitle>
-                {automation.title === "Synchronisation CRM" ? "Analyse de PDF" : 
-                 automation.title === "Générer Documents" ? "Upload de document" : 
-                 "Traitement de fichier"}
-              </DialogTitle>
+              <DialogTitle>Analyse de PDF</DialogTitle>
             </DialogHeader>
             <FileUploadForm 
               onSubmit={handleTest}

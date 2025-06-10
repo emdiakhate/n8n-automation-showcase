@@ -1,4 +1,3 @@
-
 import { AutomationCard } from "@/components/AutomationCard";
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
@@ -71,8 +70,7 @@ const automations = [
     webhookUrl: "https://n8n.srv837294.hstgr.cloud/webhook/genererdocument",
     isActive: true,
     executionCount: 78,
-    lastExecution: "Il y a 3 jours",
-    formType: "file" as const
+    lastExecution: "Il y a 3 jours"
   },
   {
     id: 7,
