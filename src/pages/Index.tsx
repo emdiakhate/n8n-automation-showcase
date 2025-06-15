@@ -66,7 +66,7 @@ const automations = [
     title: "Générer Documents",
     description: "Génère et distribue automatiquement des documents personnalisés pour votre équipe de direction.",
     category: "Reporting",
-    videoUrl: "https://example.com/demo-video-6.mp4",
+    videoUrl: "https://youtu.be/9UsJwm3OYfc",
     webhookUrl: "https://n8n.srv837294.hstgr.cloud/webhook/genererdocument",
     isActive: true,
     executionCount: 78,
