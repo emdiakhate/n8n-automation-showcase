@@ -1,9 +1,10 @@
+
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
-import { Play, MoreVertical, Activity, Clock, TestTube } from "lucide-react";
+import { Play, MoreVertical, Activity, Clock, TestTube, FileText, Sparkles } from "lucide-react";
 import { useState } from "react";
 import { WebhookResponse } from "./WebhookResponse";
 import { ScrappingForm } from "./ScrappingForm";
@@ -176,31 +177,89 @@ export const AutomationCard = ({ automation }: AutomationCardProps) => {
     return "Tester l'automatisation";
   };
 
-  const renderResponseContent = () => {
-    if (!webhookResponse) return null;
-
-    // Si les données contiennent un tableau, l'afficher sous forme de tableau
-    if (webhookResponse.data && Array.isArray(webhookResponse.data)) {
+  const renderVideoThumbnail = () => {
+    // Special thumbnail for "Générer Documents"
+    if (automation.title === "Générer Documents") {
       return (
-        <div className="space-y-4">
-          <DataTable data={webhookResponse.data} title="Résultats" />
-          {webhookResponse.message && (
-            <div className="bg-white p-3 rounded-lg border">
-              <h4 className="font-medium text-gray-700 mb-1">Message:</h4>
-              <p className="text-gray-600">{webhookResponse.message}</p>
+        <div className="relative bg-gradient-to-br from-indigo-100 via-blue-50 to-purple-100 rounded-lg aspect-video mb-4 overflow-hidden group/video">
+          <div className="absolute inset-0 flex items-center justify-center">
+            {/* AI Document Generation themed background */}
+            <div className="absolute inset-0 opacity-20">
+              <div className="absolute top-4 left-4 w-8 h-10 bg-blue-300 rounded transform rotate-12"></div>
+              <div className="absolute top-8 right-6 w-6 h-8 bg-purple-300 rounded transform -rotate-12"></div>
+              <div className="absolute bottom-6 left-8 w-10 h-6 bg-indigo-300 rounded transform rotate-45"></div>
+              <Sparkles className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 text-blue-400 opacity-30" />
             </div>
-          )}
+            
+            {/* Main content */}
+            <div className="relative z-10 text-center">
+              <div className="bg-white/90 rounded-full p-4 mb-3 shadow-lg">
+                <FileText className="w-8 h-8 text-blue-600" />
+              </div>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button 
+                    variant="secondary" 
+                    size="lg"
+                    className="bg-white/90 hover:bg-white shadow-lg group-hover/video:scale-110 transition-transform"
+                  >
+                    <Play className="w-6 h-6 mr-2" />
+                    Voir la démo
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="max-w-4xl">
+                  <DialogHeader>
+                    <DialogTitle>{automation.title} - Démonstration</DialogTitle>
+                  </DialogHeader>
+                  <div className="aspect-video bg-gray-900 rounded-lg overflow-hidden">
+                    <iframe
+                      width="100%"
+                      height="100%"
+                      src="https://www.youtube.com/embed/9UsJwm3OYfc"
+                      title="Générer Documents - Démonstration"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    ></iframe>
+                  </div>
+                </DialogContent>
+              </Dialog>
+            </div>
+          </div>
         </div>
       );
     }
 
-    // Sinon, utiliser l'affichage standard
+    // Default thumbnail for other automations
     return (
-      <WebhookResponse 
-        response={webhookResponse}
-        automationTitle={automation.title}
-        timestamp={responseTimestamp}
-      />
+      <div className="relative bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg aspect-video mb-4 overflow-hidden group/video">
+        <div className="absolute inset-0 flex items-center justify-center">
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button 
+                variant="secondary" 
+                size="lg"
+                className="bg-white/90 hover:bg-white shadow-lg group-hover/video:scale-110 transition-transform"
+              >
+                <Play className="w-6 h-6 mr-2" />
+                Voir la démo
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="max-w-4xl">
+              <DialogHeader>
+                <DialogTitle>{automation.title} - Démonstration</DialogTitle>
+              </DialogHeader>
+              <div className="aspect-video bg-gray-900 rounded-lg flex items-center justify-center">
+                <div className="text-center text-white">
+                  <Play className="w-16 h-16 mx-auto mb-4 opacity-50" />
+                  <p className="text-lg">Vidéo de démonstration</p>
+                  <p className="text-sm opacity-75">URL: {automation.videoUrl}</p>
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
+        </div>
+      </div>
     );
   };
 
@@ -255,34 +314,7 @@ export const AutomationCard = ({ automation }: AutomationCardProps) => {
           </div>
 
           {/* Video Thumbnail */}
-          <div className="relative bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg aspect-video mb-4 overflow-hidden group/video">
-            <div className="absolute inset-0 flex items-center justify-center">
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button 
-                    variant="secondary" 
-                    size="lg"
-                    className="bg-white/90 hover:bg-white shadow-lg group-hover/video:scale-110 transition-transform"
-                  >
-                    <Play className="w-6 h-6 mr-2" />
-                    Voir la démo
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="max-w-4xl">
-                  <DialogHeader>
-                    <DialogTitle>{automation.title} - Démonstration</DialogTitle>
-                  </DialogHeader>
-                  <div className="aspect-video bg-gray-900 rounded-lg flex items-center justify-center">
-                    <div className="text-center text-white">
-                      <Play className="w-16 h-16 mx-auto mb-4 opacity-50" />
-                      <p className="text-lg">Vidéo de démonstration</p>
-                      <p className="text-sm opacity-75">URL: {automation.videoUrl}</p>
-                    </div>
-                  </div>
-                </DialogContent>
-              </Dialog>
-            </div>
-          </div>
+          {renderVideoThumbnail()}
         </CardContent>
 
         <CardFooter>
