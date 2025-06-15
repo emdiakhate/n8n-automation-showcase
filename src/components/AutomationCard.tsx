@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
@@ -375,7 +374,13 @@ export const AutomationCard = ({ automation }: AutomationCardProps) => {
           <DialogHeader>
             <DialogTitle>Résultat de l'automatisation - {automation.title}</DialogTitle>
           </DialogHeader>
-          {renderResponseContent()}
+          {webhookResponse && (
+            <WebhookResponse 
+              response={webhookResponse}
+              automationTitle={automation.title}
+              timestamp={responseTimestamp}
+            />
+          )}
         </DialogContent>
       </Dialog>
     </div>
