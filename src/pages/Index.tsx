@@ -1,3 +1,4 @@
+
 import { AutomationCard } from "@/components/AutomationCard";
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
@@ -97,7 +98,7 @@ const automations = [
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-blue-100">
       <Header />
       <Hero />
       <StatsSection />
@@ -106,10 +107,10 @@ const Index = () => {
       <section className="py-16 px-4 max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Mes Automatisations n8n
+            Nos Automatisations n8n
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Découvrez comment j'optimise les processus métier avec des automatisations intelligentes et robustes
+            Découvrez comment Ynnovia optimise les processus métier avec des automatisations intelligentes et robustes
           </p>
         </div>
         
