@@ -7,92 +7,115 @@ import { StatsSection } from "@/components/StatsSection";
 const automations = [
   {
     id: 1,
-    title: "Synchronisation CRM",
-    description: "Automatise la synchronisation de votre CRM en traitant et analysant vos fichiers de données pour optimiser vos processus métier.",
-    category: "CRM & Marketing",
+    title: "Gestion Intelligente des Emails",
+    description: "Tri automatique, classement, réponses automatiques et synchronisation avec Google Sheets ou Slack pour optimiser votre messagerie.",
+    category: "Communication",
     videoUrl: "https://example.com/demo-video-1.mp4",
-    webhookUrl: "https://n8n.srv837294.hstgr.cloud/webhook/crm",
+    webhookUrl: "https://n8n.srv837294.hstgr.cloud/webhook/email_management",
     isActive: true,
-    executionCount: 1247,
-    lastExecution: "Il y a 2 minutes",
-    formType: "file" as const
+    executionCount: 1567,
+    lastExecution: "Il y a 5 minutes"
   },
   {
     id: 2,
-    title: "Assistant Personnel Vocal",
-    description: "Assistant vocal intelligent qui répond à vos questions et exécute des tâches automatisées via commandes vocales.",
-    category: "Communication",
+    title: "Extraction de Données de Factures",
+    description: "Extraction automatique de données depuis les factures reçues par email ou Telegram, puis enregistrement dans Google Sheets ou CRM.",
+    category: "Finance",
     videoUrl: "https://example.com/demo-video-2.mp4",
-    webhookUrl: "https://n8n.srv837294.hstgr.cloud/webhook/assistant_vocal",
+    webhookUrl: "https://n8n.srv837294.hstgr.cloud/webhook/invoice_extraction",
     isActive: true,
     executionCount: 892,
-    lastExecution: "Il y a 15 minutes"
+    lastExecution: "Il y a 15 minutes",
+    formType: "file" as const
   },
   {
     id: 3,
-    title: "Scrapping",
-    description: "Extraction automatique de données depuis diverses sources web avec filtrage par localisation et contrôle du volume.",
-    category: "Scrapping",
+    title: "Publication Automatique Réseaux Sociaux",
+    description: "Création et publication automatique de contenus sur TikTok, LinkedIn, Instagram à partir d'un flux RSS, blog ou podcast.",
+    category: "Marketing",
     videoUrl: "https://example.com/demo-video-3.mp4",
-    webhookUrl: "https://n8n.srv837294.hstgr.cloud/webhook/scrapping",
+    webhookUrl: "https://n8n.srv837294.hstgr.cloud/webhook/social_media",
     isActive: true,
-    executionCount: 456,
-    lastExecution: "Il y a 10 minutes",
-    formType: "scrapping" as const
+    executionCount: 1234,
+    lastExecution: "Il y a 30 minutes"
   },
   {
     id: 4,
-    title: "Générer Vidéo Produit",
-    description: "Génération de supports marketing professionnels.",
-    category: "Marketing",
+    title: "Agent IA WhatsApp",
+    description: "Réponses automatiques, prise de rendez-vous, suivi client et intégration avec OpenAI pour des réponses personnalisées sur WhatsApp.",
+    category: "Communication",
     videoUrl: "https://example.com/demo-video-4.mp4",
-    formUrl: "https://n8n.srv837294.hstgr.cloud/form/edbfac47-9880-4c19-b8b7-249d2f03727c",
+    webhookUrl: "https://n8n.srv837294.hstgr.cloud/webhook/whatsapp_ai",
     isActive: true,
-    executionCount: 234,
-    lastExecution: "Il y a 5 minutes",
-    formType: "video" as const
+    executionCount: 789,
+    lastExecution: "Il y a 2 minutes"
   },
   {
     id: 5,
-    title: "Sauvegarde Base de Données",
-    description: "Effectue des sauvegardes automatiques de vos bases de données critiques et les stocke de manière sécurisée dans le cloud.",
-    category: "Infrastructure",
+    title: "Génération de Rapports Automatique",
+    description: "Génération automatique de rapports financiers, RH, ventes à partir de différentes sources et envoi programmé par email ou Slack.",
+    category: "Reporting",
     videoUrl: "https://example.com/demo-video-5.mp4",
+    webhookUrl: "https://n8n.srv837294.hstgr.cloud/webhook/reports",
     isActive: true,
-    executionCount: 156,
+    executionCount: 456,
     lastExecution: "Il y a 1 heure"
   },
   {
     id: 6,
-    title: "Générer Documents",
-    description: "Génère et distribue automatiquement des documents personnalisés pour votre équipe de direction.",
-    category: "Reporting",
-    videoUrl: "https://youtu.be/9UsJwm3OYfc",
-    webhookUrl: "https://n8n.srv837294.hstgr.cloud/webhook/genererdocument",
+    title: "Système de Réservation Automatisé",
+    description: "Gestion des réservations avec confirmation par SMS ou WhatsApp, gestion des disponibilités et synchronisation avec Google Calendar.",
+    category: "CRM & Marketing",
+    videoUrl: "https://example.com/demo-video-6.mp4",
+    webhookUrl: "https://n8n.srv837294.hstgr.cloud/webhook/booking",
     isActive: true,
-    executionCount: 78,
-    lastExecution: "Il y a 3 jours"
+    executionCount: 678,
+    lastExecution: "Il y a 20 minutes"
   },
   {
     id: 7,
-    title: "Traitement Factures",
-    description: "Traite automatiquement les factures entrantes, extrait les données importantes et les intègre dans votre système comptable.",
-    category: "Finance",
+    title: "Surveillance de Sites Web",
+    description: "Monitoring automatique de sites web ou applications avec alertes automatiques en cas d'incident ou de changement détecté.",
+    category: "Infrastructure",
     videoUrl: "https://example.com/demo-video-7.mp4",
+    webhookUrl: "https://n8n.srv837294.hstgr.cloud/webhook/monitoring",
     isActive: true,
-    executionCount: 342,
-    lastExecution: "Il y a 30 minutes"
+    executionCount: 2341,
+    lastExecution: "Il y a 3 minutes"
   },
   {
     id: 8,
-    title: "RAG",
-    description: "Système RAG (Retrieval-Augmented Generation) pour l'analyse et la génération de contenu intelligent basé sur vos documents.",
-    category: "Intelligence Artificielle",
+    title: "Automatisation Support Client",
+    description: "Création de tickets, réponses initiales automatiques, et escalade intelligente selon la demande pour optimiser votre support.",
+    category: "Communication",
     videoUrl: "https://example.com/demo-video-8.mp4",
-    webhookUrl: "https://n8n.srv837294.hstgr.cloud/webhook/rag",
+    webhookUrl: "https://n8n.srv837294.hstgr.cloud/webhook/support",
     isActive: true,
-    executionCount: 2156,
-    lastExecution: "Il y a 1 minute"
+    executionCount: 1123,
+    lastExecution: "Il y a 8 minutes"
+  },
+  {
+    id: 9,
+    title: "Synchronisation de Contacts",
+    description: "Synchronisation automatique de contacts ou leads entre plusieurs outils (CRM, Google Contacts, Mailchimp, etc.).",
+    category: "CRM & Marketing",
+    videoUrl: "https://example.com/demo-video-9.mp4",
+    webhookUrl: "https://n8n.srv837294.hstgr.cloud/webhook/contact_sync",
+    isActive: true,
+    executionCount: 987,
+    lastExecution: "Il y a 12 minutes"
+  },
+  {
+    id: 10,
+    title: "Génération de Contenus Visuels IA",
+    description: "Génération de vidéos ou visuels à partir de prompts IA, stockage sur Google Drive et publication sur YouTube ou réseaux sociaux.",
+    category: "Intelligence Artificielle",
+    videoUrl: "https://example.com/demo-video-10.mp4",
+    webhookUrl: "https://n8n.srv837294.hstgr.cloud/webhook/ai_content",
+    isActive: true,
+    executionCount: 543,
+    lastExecution: "Il y a 25 minutes",
+    formType: "video" as const
   }
 ];
 
@@ -107,7 +130,7 @@ const Index = () => {
       <section className="py-16 px-4 max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Nos Automatisations n8n
+            Nos Automatisations Intelligentes
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             Découvrez comment Ynnovia optimise les processus métier avec des automatisations intelligentes et robustes

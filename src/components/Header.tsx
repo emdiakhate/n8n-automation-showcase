@@ -12,7 +12,7 @@ export const Header = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
           <div className="flex items-center space-x-3">
-            <div className="w-12 h-12 flex items-center justify-center">
+            <div className="w-16 h-16 flex items-center justify-center">
               <img 
                 src="/lovable-uploads/378910aa-30e7-4095-8bd1-c186c0763b1f.png" 
                 alt="Ynnovia Logo"
@@ -20,7 +20,7 @@ export const Header = () => {
               />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-gray-900">Automatisations n8n</h1>
+              <h1 className="text-xl font-bold text-gray-900">Automatisations Intelligentes</h1>
               <Badge variant="secondary" className="text-xs bg-blue-100 text-blue-800 border-blue-200">
                 Portfolio Professionnel Ynnovia
               </Badge>

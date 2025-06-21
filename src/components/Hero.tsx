@@ -14,7 +14,7 @@ export const Hero = () => {
       <div className="relative max-w-7xl mx-auto text-center">
         <Badge className="mb-6 bg-blue-100 text-blue-800 border-blue-200">
           <Zap className="w-4 h-4 mr-2" />
-          Automatisations n8n Professionnelles
+          Automatisations Intelligentes Professionnelles
         </Badge>
         
         <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-gray-900 mb-6 leading-tight">
@@ -25,7 +25,7 @@ export const Hero = () => {
         </h1>
         
         <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
-          Découvrez comment Ynnovia optimise les flux de travail avec des automatisations n8n sur mesure, 
+          Découvrez comment Ynnovia optimise les flux de travail avec des automatisations sur mesure, 
           robustes et scalables pour votre entreprise.
         </p>
         
